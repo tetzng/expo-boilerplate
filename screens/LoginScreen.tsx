@@ -1,8 +1,24 @@
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { useState } from "react";
 import { StyleSheet } from "react-native";
 
 import { Text, View } from "../components/Themed";
 
 export default function LoginScreen({}) {
+  const auth = getAuth();
+  const [loginInput] = useState<{ email: string; password: string }>({
+    email: "",
+    password: "",
+  });
+  signInWithEmailAndPassword(auth, loginInput.email, loginInput.password)
+    .then((userCredential) => {
+      const user = userCredential.user;
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+    });
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
