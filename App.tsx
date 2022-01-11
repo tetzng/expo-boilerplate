@@ -7,7 +7,8 @@ import Navigation from "./navigations";
 import "./config/firebase";
 import { getAuth } from "firebase/auth";
 import GuestNavigation from "./navigations/GuestNavigation";
-
+import React from "react";
+import { NativeBaseProvider } from "native-base";
 export default function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
@@ -20,13 +21,15 @@ export default function App() {
   const user = auth.currentUser;
   console.log(user?.email);
   return (
-    <SafeAreaProvider>
-      {user ? (
-        <Navigation colorScheme={colorScheme} />
-      ) : (
-        <GuestNavigation colorScheme={colorScheme} />
-      )}
-      <StatusBar />
-    </SafeAreaProvider>
+    <NativeBaseProvider>
+      <SafeAreaProvider>
+        {user ? (
+          <Navigation colorScheme={colorScheme} />
+        ) : (
+          <GuestNavigation colorScheme={colorScheme} />
+        )}
+        <StatusBar />
+      </SafeAreaProvider>
+    </NativeBaseProvider>
   );
 }

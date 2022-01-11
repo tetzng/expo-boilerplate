@@ -1,10 +1,23 @@
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { useState } from "react";
-import { StyleSheet } from "react-native";
+import {
+  Box,
+  Button,
+  Center,
+  FormControl,
+  Heading,
+  HStack,
+  Input,
+  Link,
+  Text,
+  VStack,
+} from "native-base";
+import React, { useState } from "react";
+import { GestureResponderEvent } from "react-native";
+import { GuestStackScreenProps } from "../types";
 
-import { Text, View } from "../components/Themed";
-
-export default function LoginScreen({}) {
+export default function LoginScreen({
+  navigation,
+}: GuestStackScreenProps<"Login">) {
   const auth = getAuth();
   const [loginInput] = useState<{ email: string; password: string }>({
     email: "",
@@ -19,31 +32,89 @@ export default function LoginScreen({}) {
       const errorMessage = error.message;
     });
 
+  const hoge = () => navigation.navigate("SignUp");
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
-    </View>
+    <Center flex={1} px="3">
+      <LoginForm navigateSignUp={() => navigation.navigate("SignUp")} />
+    </Center>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
-});
+const LoginForm: React.FC<{
+  navigateSignUp:
+    | ((event?: GestureResponderEvent | undefined) => any)
+    | null
+    | undefined;
+}> = ({ navigateSignUp }) => {
+  return (
+    <Box safeArea p="2" py="8" w="90%" maxW="290">
+      <Heading
+        size="lg"
+        fontWeight="600"
+        color="coolGray.800"
+        _dark={{
+          color: "warmGray.50",
+        }}
+      >
+        Welcome
+      </Heading>
+      <Heading
+        mt="1"
+        _dark={{
+          color: "warmGray.200",
+        }}
+        color="coolGray.600"
+        fontWeight="medium"
+        size="xs"
+      >
+        Sign in to continue!
+      </Heading>
+
+      <VStack space={3} mt="5">
+        <FormControl>
+          <FormControl.Label>Email ID</FormControl.Label>
+          <Input />
+        </FormControl>
+        <FormControl>
+          <FormControl.Label>Password</FormControl.Label>
+          <Input type="password" />
+          <Link
+            _text={{
+              fontSize: "xs",
+              fontWeight: "500",
+              color: "indigo.500",
+            }}
+            alignSelf="flex-end"
+            mt="1"
+          >
+            Forget Password?
+          </Link>
+        </FormControl>
+        <Button mt="2" colorScheme="indigo">
+          Sign in
+        </Button>
+        <HStack mt="6" justifyContent="center">
+          <Text
+            fontSize="sm"
+            color="coolGray.600"
+            _dark={{
+              color: "warmGray.200",
+            }}
+          >
+            I'm a new user.{" "}
+          </Text>
+          <Link
+            _text={{
+              color: "indigo.500",
+              fontWeight: "medium",
+              fontSize: "sm",
+            }}
+            onPress={navigateSignUp}
+          >
+            Sign Up
+          </Link>
+        </HStack>
+      </VStack>
+    </Box>
+  );
+};
