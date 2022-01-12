@@ -1,4 +1,4 @@
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import {
   Box,
   Button,
@@ -10,41 +10,40 @@ import {
   Link,
   Text,
   VStack,
-} from "native-base";
-import React, { useState } from "react";
-import { GestureResponderEvent } from "react-native";
-import { GuestStackScreenProps } from "../types";
+} from 'native-base'
+import React, { useState } from 'react'
+import { GestureResponderEvent } from 'react-native'
+import { GuestStackScreenProps } from '../types'
 
 export default function SignInScreen({
   navigation,
-}: GuestStackScreenProps<"SignIn">) {
-  const auth = getAuth();
+}: GuestStackScreenProps<'SignIn'>) {
+  const auth = getAuth()
   const [signInInput] = useState<{ email: string; password: string }>({
-    email: "",
-    password: "",
-  });
+    email: '',
+    password: '',
+  })
   signInWithEmailAndPassword(auth, signInInput.email, signInInput.password)
     .then((userCredential) => {
-      const user = userCredential.user;
+      const user = userCredential.user
     })
     .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-    });
+      const errorCode = error.code
+      const errorMessage = error.message
+    })
 
-  const hoge = () => navigation.navigate("SignUp");
   return (
     <Center flex={1} px="3">
-      <SignInForm navigateSignUp={() => navigation.navigate("SignUp")} />
+      <SignInForm navigateSignUp={() => navigation.navigate('SignUp')} />
     </Center>
-  );
+  )
 }
 
 const SignInForm: React.FC<{
   navigateSignUp:
     | ((event?: GestureResponderEvent | undefined) => any)
     | null
-    | undefined;
+    | undefined
 }> = ({ navigateSignUp }) => {
   return (
     <Box safeArea p="2" py="8" w="90%" maxW="290">
@@ -53,7 +52,7 @@ const SignInForm: React.FC<{
         fontWeight="600"
         color="coolGray.800"
         _dark={{
-          color: "warmGray.50",
+          color: 'warmGray.50',
         }}
       >
         Welcome
@@ -61,7 +60,7 @@ const SignInForm: React.FC<{
       <Heading
         mt="1"
         _dark={{
-          color: "warmGray.200",
+          color: 'warmGray.200',
         }}
         color="coolGray.600"
         fontWeight="medium"
@@ -80,9 +79,9 @@ const SignInForm: React.FC<{
           <Input type="password" />
           <Link
             _text={{
-              fontSize: "xs",
-              fontWeight: "500",
-              color: "indigo.500",
+              fontSize: 'xs',
+              fontWeight: '500',
+              color: 'indigo.500',
             }}
             alignSelf="flex-end"
             mt="1"
@@ -98,16 +97,16 @@ const SignInForm: React.FC<{
             fontSize="sm"
             color="coolGray.600"
             _dark={{
-              color: "warmGray.200",
+              color: 'warmGray.200',
             }}
           >
-            I'm a new user.{" "}
+            I'm a new user.{' '}
           </Text>
           <Link
             _text={{
-              color: "indigo.500",
-              fontWeight: "medium",
-              fontSize: "sm",
+              color: 'indigo.500',
+              fontWeight: 'medium',
+              fontSize: 'sm',
             }}
             onPress={navigateSignUp}
           >
@@ -116,5 +115,5 @@ const SignInForm: React.FC<{
         </HStack>
       </VStack>
     </Box>
-  );
-};
+  )
+}

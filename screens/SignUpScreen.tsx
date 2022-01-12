@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth'
 import {
   Box,
   Button,
@@ -7,34 +7,34 @@ import {
   Heading,
   Input,
   VStack,
-} from "native-base";
-import React, { useState } from "react";
+} from 'native-base'
+import React, { useState } from 'react'
 
 export default function SignUpScreen({}) {
-  const auth = getAuth();
+  const auth = getAuth()
   const [input, setInput] = useState<{
-    email: string;
-    password: string;
-    passwordConfirm: string;
+    email: string
+    password: string
+    passwordConfirm: string
   }>({
-    email: "",
-    password: "",
-    passwordConfirm: "",
-  });
+    email: '',
+    password: '',
+    passwordConfirm: '',
+  })
   createUserWithEmailAndPassword(auth, input.email, input.password)
     .then((userCredential) => {
-      const user = userCredential.user;
+      const user = userCredential.user
     })
     .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-    });
+      const errorCode = error.code
+      const errorMessage = error.message
+    })
 
   return (
     <Center flex={1} px="3">
       <SignUpForm />
     </Center>
-  );
+  )
 }
 
 const SignUpForm = () => {
@@ -44,7 +44,7 @@ const SignUpForm = () => {
         size="lg"
         color="coolGray.800"
         _dark={{
-          color: "warmGray.50",
+          color: 'warmGray.50',
         }}
         fontWeight="semibold"
       >
@@ -54,7 +54,7 @@ const SignUpForm = () => {
         mt="1"
         color="coolGray.600"
         _dark={{
-          color: "warmGray.200",
+          color: 'warmGray.200',
         }}
         fontWeight="medium"
         size="xs"
@@ -79,5 +79,5 @@ const SignUpForm = () => {
         </Button>
       </VStack>
     </Box>
-  );
-};
+  )
+}
