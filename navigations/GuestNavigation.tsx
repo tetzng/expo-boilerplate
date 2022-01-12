@@ -10,6 +10,7 @@ import { ColorSchemeName } from "react-native";
 import SignInScreen from "../screens/SignInScreen";
 import SignUpScreen from "../screens/SignUpScreen";
 import { GuestStackParamList } from "../types";
+import { guestLinking } from "./LinkingConfiguration";
 
 export default function GuestNavigation({
   colorScheme,
@@ -18,6 +19,7 @@ export default function GuestNavigation({
 }) {
   return (
     <NavigationContainer
+      linking={guestLinking}
       theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
     >
       <RootNavigator />

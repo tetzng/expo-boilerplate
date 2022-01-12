@@ -9,6 +9,7 @@ import { getAuth } from "firebase/auth";
 import GuestNavigation from "./navigations/GuestNavigation";
 import React from "react";
 import { NativeBaseProvider } from "native-base";
+import MemberNavigation from "./navigations";
 export default function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
@@ -24,7 +25,7 @@ export default function App() {
     <NativeBaseProvider>
       <SafeAreaProvider>
         {user ? (
-          <Navigation colorScheme={colorScheme} />
+          <MemberNavigation colorScheme={colorScheme} />
         ) : (
           <GuestNavigation colorScheme={colorScheme} />
         )}
