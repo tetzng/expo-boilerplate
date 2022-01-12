@@ -15,15 +15,15 @@ import React, { useState } from "react";
 import { GestureResponderEvent } from "react-native";
 import { GuestStackScreenProps } from "../types";
 
-export default function LoginScreen({
+export default function SignInScreen({
   navigation,
-}: GuestStackScreenProps<"Login">) {
+}: GuestStackScreenProps<"SignIn">) {
   const auth = getAuth();
-  const [loginInput] = useState<{ email: string; password: string }>({
+  const [signInInput] = useState<{ email: string; password: string }>({
     email: "",
     password: "",
   });
-  signInWithEmailAndPassword(auth, loginInput.email, loginInput.password)
+  signInWithEmailAndPassword(auth, signInInput.email, signInInput.password)
     .then((userCredential) => {
       const user = userCredential.user;
     })
@@ -35,12 +35,12 @@ export default function LoginScreen({
   const hoge = () => navigation.navigate("SignUp");
   return (
     <Center flex={1} px="3">
-      <LoginForm navigateSignUp={() => navigation.navigate("SignUp")} />
+      <SignInForm navigateSignUp={() => navigation.navigate("SignUp")} />
     </Center>
   );
 }
 
-const LoginForm: React.FC<{
+const SignInForm: React.FC<{
   navigateSignUp:
     | ((event?: GestureResponderEvent | undefined) => any)
     | null

@@ -7,7 +7,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
 import { ColorSchemeName } from "react-native";
 
-import LoginScreen from "../screens/LoginScreen";
+import SignInScreen from "../screens/SignInScreen";
 import SignUpScreen from "../screens/SignUpScreen";
 import { GuestStackParamList } from "../types";
 
@@ -31,8 +31,8 @@ function RootNavigator() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Login"
-        component={LoginScreen}
+        name="SignIn"
+        component={SignInScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen

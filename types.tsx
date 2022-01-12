@@ -38,7 +38,7 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
   >;
 
 export type GuestStackParamList = {
-  Login: undefined;
+  SignIn: undefined;
   SignUp: undefined;
 };
 
