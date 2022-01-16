@@ -13,7 +13,7 @@ import {
 } from 'native-base'
 import React, { useState } from 'react'
 import { GestureResponderEvent } from 'react-native'
-import { GuestStackScreenProps } from '../types'
+import { GuestStackScreenProps } from '../types/types'
 
 export default function SignInScreen({
   navigation,

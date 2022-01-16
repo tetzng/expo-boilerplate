@@ -7,7 +7,7 @@
 import { LinkingOptions } from '@react-navigation/native'
 import * as Linking from 'expo-linking'
 
-import { GuestStackParamList, RootStackParamList } from '../types'
+import { GuestStackParamList, RootStackParamList } from '../types/types'
 
 export const memberLinking: LinkingOptions<RootStackParamList> = {
   prefixes: [Linking.createURL('/')],

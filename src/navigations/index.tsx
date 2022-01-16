@@ -24,7 +24,7 @@ import {
   RootStackParamList,
   RootTabParamList,
   RootTabScreenProps,
-} from '../types'
+} from '../types/types'
 import { memberLinking } from './LinkingConfiguration'
 
 export default function MemberNavigation({
