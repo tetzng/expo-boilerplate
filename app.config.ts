@@ -1,4 +1,9 @@
 import { ExpoConfig, ConfigContext } from '@expo/config'
+import {
+  SENTRY_AUTH_TOKEN,
+  SENTRY_ORG,
+  SENTRY_PROJECT,
+} from 'react-native-dotenv'
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
@@ -36,9 +41,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       {
         file: 'sentry-expo/upload-sourcemaps',
         config: {
-          organization: process.env.SENTRY_ORG,
-          project: process.env.SENTRY_PROJECT,
-          authToken: process.env.AUTH_TOKEN,
+          organization: SENTRY_ORG,
+          project: SENTRY_PROJECT,
+          authToken: SENTRY_AUTH_TOKEN,
         },
       },
     ],
