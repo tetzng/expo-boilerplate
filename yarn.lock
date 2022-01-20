@@ -8166,6 +8166,11 @@ react-dom@17.0.1:
     object-assign "^4.1.1"
     scheduler "^0.20.1"
 
+react-firebase-hooks@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/react-firebase-hooks/-/react-firebase-hooks-4.0.2.tgz#60e98f5bacc4550920444c0667a710e4670d39f5"
+  integrity sha512-DwykuPHfnGIHbJYgRxh3sacfdeEyRxlqwBOdwClkA07s9Shi9gqcOWgMzOPbXPbP6o94YDnNW2yP42opgQs7Nw==
+
 react-freeze@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/react-freeze/-/react-freeze-1.0.0.tgz#b21c65fe1783743007c8c9a2952b1c8879a77354"
