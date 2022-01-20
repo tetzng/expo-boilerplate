@@ -9,35 +9,50 @@ import {
   VStack,
 } from 'native-base'
 import React, { useState } from 'react'
+import { GestureResponderEvent } from 'react-native'
 
+type SignUpInput = {
+  email: string
+  password: string
+  passwordConfirmation: string
+}
 export default function SignUpScreen({}) {
   const auth = getAuth()
-  const [input, setInput] = useState<{
-    email: string
-    password: string
-    passwordConfirm: string
-  }>({
+  const [input, setInput] = useState<SignUpInput>({
     email: '',
     password: '',
-    passwordConfirm: '',
+    passwordConfirmation: '',
   })
-  createUserWithEmailAndPassword(auth, input.email, input.password)
-    .then((userCredential) => {
-      const user = userCredential.user
-    })
-    .catch((error) => {
-      const errorCode = error.code
-      const errorMessage = error.message
-    })
+  const signUp = async () => {
+    const response = await createUserWithEmailAndPassword(
+      auth,
+      input.email,
+      input.password
+    )
+      .then((userCredential) => {
+        const user = userCredential.user
+        console.log(user)
+      })
+      .catch((error) => {
+        const errorCode = error.code
+        const errorMessage = error.message
+        console.log(errorCode, errorMessage)
+      })
+    console.log(response)
+  }
 
   return (
     <Center flex={1} px="3">
-      <SignUpForm />
+      <SignUpForm input={input} setInput={setInput} onPress={signUp} />
     </Center>
   )
 }
 
-const SignUpForm = () => {
+const SignUpForm: React.FC<{
+  input: SignUpInput
+  setInput: React.Dispatch<React.SetStateAction<SignUpInput>>
+  onPress: (event: GestureResponderEvent) => void
+}> = ({ input, setInput, onPress }) => {
   return (
     <Box safeArea p="2" w="90%" maxW="290" py="8">
       <Heading
@@ -64,17 +79,34 @@ const SignUpForm = () => {
       <VStack space={3} mt="5">
         <FormControl>
           <FormControl.Label>Email</FormControl.Label>
-          <Input />
+          <Input
+            isRequired
+            placeholder="email@example.com"
+            onChangeText={(text) => setInput({ ...input, email: text })}
+            value={input.email}
+          />
         </FormControl>
         <FormControl>
           <FormControl.Label>Password</FormControl.Label>
-          <Input type="password" />
+          <Input
+            isRequired
+            type="password"
+            onChangeText={(text) => setInput({ ...input, password: text })}
+            value={input.password}
+          />
         </FormControl>
         <FormControl>
           <FormControl.Label>Confirm Password</FormControl.Label>
-          <Input type="password" />
+          <Input
+            isRequired
+            onChangeText={(text) =>
+              setInput({ ...input, passwordConfirmation: text })
+            }
+            value={input.passwordConfirmation}
+            type="password"
+          />
         </FormControl>
-        <Button mt="2" colorScheme="indigo">
+        <Button mt="2" colorScheme="indigo" onPress={onPress}>
           Sign up
         </Button>
       </VStack>
