@@ -1,4 +1,3 @@
-import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth'
 import {
   Box,
   Button,
@@ -9,7 +8,9 @@ import {
   VStack,
 } from 'native-base'
 import React, { useState } from 'react'
+import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth'
 import { GestureResponderEvent } from 'react-native'
+import { auth } from '../config/firebase'
 
 type SignUpInput = {
   email: string
@@ -17,29 +18,15 @@ type SignUpInput = {
   passwordConfirmation: string
 }
 export default function SignUpScreen({}) {
-  const auth = getAuth()
   const [input, setInput] = useState<SignUpInput>({
     email: '',
     password: '',
     passwordConfirmation: '',
   })
-  const signUp = async () => {
-    const response = await createUserWithEmailAndPassword(
-      auth,
-      input.email,
-      input.password
-    )
-      .then((userCredential) => {
-        const user = userCredential.user
-        console.log(user)
-      })
-      .catch((error) => {
-        const errorCode = error.code
-        const errorMessage = error.message
-        console.log(errorCode, errorMessage)
-      })
-    console.log(response)
-  }
+  const [createUserWithEmailAndPassword, user, loading, error] =
+    useCreateUserWithEmailAndPassword(auth)
+  const signUp = () =>
+    createUserWithEmailAndPassword(input.email, input.password)
 
   return (
     <Center flex={1} px="3">
@@ -106,7 +93,12 @@ const SignUpForm: React.FC<{
             type="password"
           />
         </FormControl>
-        <Button mt="2" colorScheme="indigo" onPress={onPress}>
+        <Button
+          mt="2"
+          colorScheme="indigo"
+          disabled={input.password !== input.passwordConfirmation}
+          onPress={onPress}
+        >
           Sign up
         </Button>
       </VStack>

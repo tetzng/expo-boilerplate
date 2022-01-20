@@ -1,4 +1,3 @@
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import {
   Box,
   Button,
@@ -12,7 +11,9 @@ import {
   VStack,
 } from 'native-base'
 import React, { useState } from 'react'
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth'
 import { GestureResponderEvent } from 'react-native'
+import { auth } from '../config/firebase'
 import { GuestStackScreenProps } from '../types/types'
 
 type SignInInput = { email: string; password: string }
@@ -20,26 +21,14 @@ type SignInInput = { email: string; password: string }
 export default function SignInScreen({
   navigation,
 }: GuestStackScreenProps<'SignIn'>) {
-  const auth = getAuth()
   const [input, setInput] = useState<SignInInput>({
     email: '',
     password: '',
   })
-  const signIn = async () => {
-    const response = await signInWithEmailAndPassword(
-      auth,
-      input.email,
-      input.password
-    )
-      .then((userCredential) => {
-        const user = userCredential.user
-      })
-      .catch((error) => {
-        const errorCode = error.code
-        const errorMessage = error.message
-      })
-    console.log(response)
-  }
+  const [signInWithEmailAndPassword, user, loading, error] =
+    useSignInWithEmailAndPassword(auth)
+  const handleSubmit = () =>
+    signInWithEmailAndPassword(input.email, input.password)
 
   return (
     <Center flex={1} px="3">
@@ -47,7 +36,7 @@ export default function SignInScreen({
         input={input}
         setInput={setInput}
         navigateSignUp={() => navigation.navigate('SignUp')}
-        onPress={signIn}
+        onPress={handleSubmit}
       />
     </Center>
   )
