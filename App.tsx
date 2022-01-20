@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar'
-import { getAuth } from 'firebase/auth'
-import React from 'react'
+import { getAuth, onAuthStateChanged, User } from 'firebase/auth'
+import React, { useState } from 'react'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { NativeBaseProvider } from 'native-base'
 
@@ -15,13 +15,16 @@ import MemberNavigation from './src/navigations'
 export default function App() {
   const isLoadingComplete = useCachedResources()
   const colorScheme = useColorScheme()
+  const auth = getAuth()
+  const [user, setUser] = useState(auth.currentUser)
 
   if (!isLoadingComplete) {
     return null
   }
 
-  const auth = getAuth()
-  const user = auth.currentUser
+  onAuthStateChanged(auth, (changedUser) => {
+    setUser(changedUser)
+  })
 
   return (
     <NativeBaseProvider>
