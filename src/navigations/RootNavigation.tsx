@@ -1,20 +1,18 @@
-import React from 'react'
-import { useRecoilState } from 'recoil'
+import React, { useState } from 'react'
 import { onAuthStateChanged } from 'firebase/auth'
 import useColorScheme from '../hooks/useColorScheme'
 import { auth } from '../config/firebase'
-import { currentUserState } from '../atoms/currentUserState'
 import GuestNavigation from './GuestNavigation'
 import { MemberNavigation } from './MemberNavigation'
+import { useCurrentUser } from '../hooks/useCurrentUser'
 
 export const RootNavigation = () => {
   const colorScheme = useColorScheme()
-  const [currentUser, setCurrentUser] = useRecoilState(currentUserState)
-  onAuthStateChanged(auth, (user) => setCurrentUser(user))
+  const [currentUser] = useCurrentUser(auth)
 
   return (
     <>
-      {!currentUser ? (
+      {currentUser ? (
         <MemberNavigation colorScheme={colorScheme} />
       ) : (
         <GuestNavigation colorScheme={colorScheme} />
