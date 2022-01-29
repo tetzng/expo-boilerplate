@@ -10,7 +10,7 @@ export const RootNavigation = () => {
   const colorScheme = useColorScheme()
   const [currentUser, loading] = useCurrentUser(auth)
 
-  if (!loading) {
+  if (loading) {
     return <Loading />
   }
 
