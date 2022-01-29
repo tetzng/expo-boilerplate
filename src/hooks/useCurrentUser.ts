@@ -1,9 +1,17 @@
-import { Auth, onAuthStateChanged } from 'firebase/auth'
+import { Auth, onAuthStateChanged, User } from 'firebase/auth'
 import { useState } from 'react'
 
 export const useCurrentUser = (auth: Auth) => {
-  const [currentUser, setCurrentUser] = useState(auth.currentUser)
-  onAuthStateChanged(auth, (user) => setCurrentUser(user))
+  const [currentUser, setCurrentUser] = useState<User | null>()
+  const [error, setError] = useState<Error>()
 
-  return [currentUser, setCurrentUser]
+  onAuthStateChanged(
+    auth,
+    (user) => setCurrentUser(user),
+    (err) => setError(err)
+  )
+
+  const loading = currentUser === undefined
+
+  return [currentUser, loading, error]
 }
